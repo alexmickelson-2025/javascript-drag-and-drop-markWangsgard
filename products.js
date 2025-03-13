@@ -73,7 +73,6 @@ export var cart = [{
 }];
 
 export const AddToCart = (itemTitle) => {
-  console.log("Adding Item");
   const product = products.find((product) => product.title === itemTitle);
   if (product) {
     product.quantity--;
@@ -93,7 +92,6 @@ export const AddToCart = (itemTitle) => {
 };
 
 export const RemoveFromCart = (itemTitle) => {
-  console.log("removing Item");
   const product = cart.find((product) => product.title === itemTitle);
   if (product) {
     product.quantity--;

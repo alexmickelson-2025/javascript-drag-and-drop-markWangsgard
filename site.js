@@ -100,9 +100,5 @@ cartListContainerElement.addEventListener("drop", (e) => {
   generateCartCards();
 });
 
-
-RemoveFromCart("Water Bottle");
-AddToCart("Toothbrush");
 generateAvailableProductsCards();
 generateCartCards();
-console.log(cart)
