@@ -1,12 +1,5 @@
 export var products = [
   {
-    title: "Water Bottle",
-    description: "A 500ml reusable water bottle.",
-    price: 10.99,
-    quantity: 3,
-    image: "/images/waterbottle.jpg",
-  },
-  {
     title: "Toothbrush",
     description: "A standard toothbrush with soft bristles.",
     price: 2.49,
@@ -71,13 +64,20 @@ export var products = [
   },
 ];
 
-export var cart = [];
+export var cart = [{
+  title: "Water Bottle",
+  description: "A 500ml reusable water bottle.",
+  price: 10.99,
+  quantity: 3,
+  image: "/images/waterbottle.jpg",
+}];
 
-export const AddToCart = (item) => {
-  const product = products.find((product) => product.title === item.title);
+export const AddToCart = (itemTitle) => {
+  console.log("Adding Item");
+  const product = products.find((product) => product.title === itemTitle);
   if (product) {
     product.quantity--;
-    const productInCart = cart.find((product) => product.title === item.title);
+    const productInCart = cart.find((product) => product.title === itemTitle);
     if (productInCart) {
       productInCart.quantity++;
     } else {
@@ -85,19 +85,20 @@ export const AddToCart = (item) => {
       newProduct.quantity = 1;
       cart = [...cart, newProduct];
     }
-  }
-  if (product.quantity === 0) {
-    const productIndex = products.findIndex((value) => value.quantity === 0);
-    products.splice(productIndex, 1);
-  }
+    if (product.quantity === 0) {
+      const productIndex = products.findIndex((value) => value.quantity === 0);
+      products.splice(productIndex, 1);
+    }
+  }  
 };
 
-export const RemoveFromCart = (item) => {
-  const product = cart.find((product) => product.title === item.title);
+export const RemoveFromCart = (itemTitle) => {
+  console.log("removing Item");
+  const product = cart.find((product) => product.title === itemTitle);
   if (product) {
     product.quantity--;
     const productInCart = products.find(
-      (product) => product.title === item.title
+      (product) => product.title === itemTitle
     );
     if (productInCart) {
       productInCart.quantity++;
@@ -106,9 +107,17 @@ export const RemoveFromCart = (item) => {
       newProduct.quantity = 1;
       products = [...products, newProduct];
     }
-  }
-  if (product.quantity === 0) {
-    const productIndex = cart.findIndex((value) => value.quantity === 0);
-    cart.splice(productIndex, 1);
+    if (product.quantity === 0) {
+      const productIndex = cart.findIndex((value) => value.quantity === 0);
+      cart.splice(productIndex, 1);
+    }
   }
 };
+
+export const CalculateCost = () => {
+  var total = 0;
+  cart.forEach((item) => {
+    total = total + (item.quantity * item.price);
+  })
+  return total.toFixed(2);
+}
